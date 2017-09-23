@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+/**
+ *
+* @author 140304 Oscar Antonio Vazquez Lara 1(00*)*
+* A continuacion se muestra el codigo del automata que seleccione para representarlo.
+* el automata es muy sencillo consta de tres estados, el inicial que es q0, un estado de aceptacion en q1 y otro estado de aceptacion en q2
+* de esta forma para formar la expresion 1(00*)*
+* el alfabeto es 1 y 0 por lo qque otro caracter es invalido es AFD
+* La logica que se siguio fue: cada estado esta representado por una funcion, en cada funcion se evalua si la cadena introducida es valida o no 
+* y se le da una breve explicacion si esta no la fuera
+* el programa no se cicla ya que cuenta con un contador de caracteres en la cadena para verificar que finalice de forma adecuada
+* ademas de evaluar a cada momento si es valida la cadena
+ */
+ 
+public class Automata {
+
+    int cont;//contador de caracteres para saber cuando terminar de evaluar
+    static String cadena; //Aqui guardaremos la cadena a evaluar
+    char [] car;//Aqui tranformaremos la cadena a caracteres para evaluarla de una en una
+    static Scanner teclado=new Scanner(System.in); //Escaner para leer cadena ingresada
+
+     public static void main(String[]args){
+        
+        Automata aut= new Automata();//clase de mi automata
+        System.out.println("\n Automata AFD 1(00*)* \n  Ingresa una cadena sin separacion  Alfabeto= 1,0 \n -> "); //Pedimos la cadena
+        cadena=teclado.next();//Leemos la cadena
+        aut.car=cadena.toCharArray();//Transformamos a caracteres para evaluarla
+        aut.inicio();//
+        
+    }
+     public void inicio (){ //Funcion de inicio
+         cont = 0;//Iniciamos el contador a cero
+         q0();//Vamos al estado inicial del automata
+         
+     }
+     public void q0(){//Estado inicial del automata q0
+         System.out.println("- E.inicial q0\n");
+         
+         if(cont < car.length){//evaluar en que caracter vamos
+             if(car[cont]=='1'){//comparamos si es que puede ir al siguiente estado
+             cont++;//incrementamos contador 
+             q1();//nos movemos al siguiente estado
+             }else if (car[cont]=='0'){//no hay estado con 0 por lo que no sera valida la cadena
+                 System.out.println(" Cadena no valida *no se puede no hay 0 en q0* ");
+             }else{
+             System.out.println(" Cadena no vailida ");//Si es cualquier otro caracter no sera valido porque no esta en el alfabeto
+             }
+             }
+     }
+     
+     public void q1(){ //siguiente estado del automata ESTADO DE ACEPTACION 1
+     System.out.println("- En q1 \n");
+         if(cont < car.length){//evaluar en que caracter vamos
+             if(car[cont]=='0'){//Si es 0 el siguiente estado es q2
+
+             cont++;//aumentamos
+             q2();//nos vamos a q2
+             }else if (car[cont]=='1'){//no hay estado con 1 por lo que no sera valida la cadena
+                 System.out.println(" Cadena no valida *no se puede no hay 1 en q1* ");
+             }else{
+             System.out.println(" Cadena no vailida ");//Si es cualquier otro caracter no sera valido porque no esta en el alfabeto
+             }
+             }
+     }
+     public void q2(){//siguiente estado del automata ESTADO DE ACEPTACION 2
+     System.out.println("- En q2 \n");
+         if(cont < car.length){//evaluar en que caracter vamos
+             if(car[cont]=='0'){//Si es 0 nos regresamos al estado q1
+
+             cont++;//incrementamos
+             q1();//nos vamos a q1
+             }else if (car[cont]=='1'){//no hay estado con 1 por lo que no sera valida la cadena
+                 System.out.println(" Cadena no valida *no se puede no hay 1 en q2* ");
+             }else{
+             System.out.println(" Cadena no vailida ");//Si es cualquier otro caracter no sera valido porque no esta en el alfabeto
+             }
+             }
+     }
+    
+    
+
+} 
